@@ -1,5 +1,7 @@
 package com.sph.newspaper.rest;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sph.newspaper.converter.DtoStringToLocalDateConverter;
+import com.sph.newspaper.converter.DtoStringToLocalDateTimeConverter;
 import com.sph.newspaper.domain.Article;
 import com.sph.newspaper.exception.ApplicationException;
 import com.sph.newspaper.rest.dto.ArticleDto;
@@ -49,9 +51,8 @@ public class ArticleRestController extends ApplicationRestController{
 	
 	@RequestMapping(value = "{dd-MM-yyyy}/{count}", method = RequestMethod.GET)
 	public List<ArticleDto> readArticles(@PathVariable("dd-MM-yyyy") String date, @PathVariable int count) {
-		try {			
-			DtoStringToLocalDateConverter converter = new DtoStringToLocalDateConverter("dd-MM-yyyy");
-			List<Article> articles = service.getByPublishedDateAndCount(converter.convert(date), count);
+		try {						
+			List<Article> articles = service.getByPublishedDateAndCount(convertToLocalDate(date), count);
 			return mapper.convertToDtoList(articles);
 		} catch (Exception ex) {
 			throw ex;
@@ -88,5 +89,10 @@ public class ArticleRestController extends ApplicationRestController{
 		} catch (Exception ex) {
 			throw ex;
 		}
+	}
+	
+	private LocalDate convertToLocalDate(String date) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		return LocalDate.parse(date, formatter);
 	}
 }

@@ -1,4 +1,4 @@
-# Update following variables before execute this shell file
+# Replace following variables from correct values before execute this shell file
 # DB_HOST = Database host name or IP address
 # DB_PORT = Database Port number. The default port is 27017
 # DB_NAME = Database name (e.g. sph-dev, sph-test, sph)

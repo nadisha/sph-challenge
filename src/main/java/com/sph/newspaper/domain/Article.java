@@ -1,6 +1,7 @@
 package com.sph.newspaper.domain;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,7 +15,7 @@ public class Article {
 	
 	private String publication;
 	
-	private LocalDate publishedDate;
+	private LocalDateTime publishedDate;
 	
 	private String headline;
 	
@@ -22,7 +23,7 @@ public class Article {
 	
 	private String author;
 	
-	private LocalDate modifiedDate;
+	private LocalDateTime modifiedDate;
 
 	public String getId() {
 		return id;
@@ -40,11 +41,11 @@ public class Article {
 		this.publication = publication;
 	}
 
-	public LocalDate getPublishedDate() {
+	public LocalDateTime getPublishedDate() {
 		return publishedDate;
 	}
 
-	public void setPublishedDate(LocalDate publishedDate) {
+	public void setPublishedDate(LocalDateTime publishedDate) {
 		this.publishedDate = publishedDate;
 	}
 
@@ -72,11 +73,11 @@ public class Article {
 		this.author = author;
 	}
 
-	public LocalDate getModifiedDate() {
+	public LocalDateTime getModifiedDate() {
 		return modifiedDate;
 	}
 
-	public void setModifiedDate(LocalDate modifiedDate) {
+	public void setModifiedDate(LocalDateTime modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
 

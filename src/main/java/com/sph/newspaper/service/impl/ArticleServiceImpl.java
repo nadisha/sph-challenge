@@ -1,10 +1,14 @@
 package com.sph.newspaper.service.impl;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
 import com.sph.newspaper.domain.Article;
@@ -21,7 +25,8 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Override
 	public List<Article> getAll() {
-		return repository.findAll();
+		Sort sort = new Sort(new Order(Direction.ASC, "publishedDate"));
+		return repository.findAll(sort);
 	}
 
 	@Override
@@ -31,8 +36,11 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Override
 	public List<Article> getByPublishedDateAndCount(LocalDate date, int count) {
-		PageRequest pageRequest = new PageRequest(0, count);
-		return repository.findByPublishedDate(date, pageRequest);
+		Sort sort = new Sort(new Order(Direction.ASC, "publishedDate"));
+		PageRequest pageRequest = new PageRequest(0, count, sort);
+		LocalDateTime from = LocalDateTime.of(date.getYear(), date.getMonth(), date.getDayOfMonth(), 0, 0);
+		LocalDateTime to = LocalDateTime.of(date.getYear(), date.getMonth(), date.getDayOfMonth(), 23, 59);
+		return repository.findByPublishedDateBetween(from, to, pageRequest);
 	}
 
 	@Override
@@ -44,9 +52,9 @@ public class ArticleServiceImpl implements ArticleService {
 			if (oldArticle != null) {
 				throw new ArticleAlreadyExistException("An article is already available for code " + article.getCode());
 			}
-			article.setPublishedDate(LocalDate.now());
+			article.setPublishedDate(LocalDateTime.now());
 		}
-		article.setModifiedDate(LocalDate.now());
+		article.setModifiedDate(LocalDateTime.now());
 		return repository.save(article);
 	}
 

@@ -23,6 +23,7 @@ Article information should include article id, publication, published date, head
 * Field sorting on columns of the data-table
 * Pagination for the data-table 
 * Add appropriate logger messages
+* Validations in certain scenarios
 
 # REST API end points
 * `GET` `/api/articles` - Get all the articles

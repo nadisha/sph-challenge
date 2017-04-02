@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
-import com.sph.newspaper.converter.DtoLocalDateToStringConverter;
-import com.sph.newspaper.converter.DtoStringToLocalDateConverter;
+import com.sph.newspaper.converter.DtoLocalDateTimeToStringConverter;
+import com.sph.newspaper.converter.DtoStringToLocalDateTimeConverter;
 
 @Configuration
 @ComponentScan(basePackages = {"com.sph.newspaper.service"})
@@ -26,8 +26,8 @@ public class ServiceConfig {
 		ModelMapper modelMapper = new ModelMapper();
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		String dateFormat = env.getProperty("app.date.format");
-		DtoLocalDateToStringConverter localDateToStringConv = new DtoLocalDateToStringConverter(dateFormat);
-		DtoStringToLocalDateConverter stringToLocalDateConv = new DtoStringToLocalDateConverter(dateFormat);
+		DtoLocalDateTimeToStringConverter localDateToStringConv = new DtoLocalDateTimeToStringConverter(dateFormat);
+		DtoStringToLocalDateTimeConverter stringToLocalDateConv = new DtoStringToLocalDateTimeConverter(dateFormat);
 		modelMapper.addConverter(localDateToStringConv);
 		modelMapper.addConverter(stringToLocalDateConv);
 		return modelMapper; 
