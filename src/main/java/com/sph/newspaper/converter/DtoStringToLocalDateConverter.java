@@ -19,7 +19,7 @@ public class DtoStringToLocalDateConverter extends AbstractConverter<String, Loc
 	}	
 
 	@Override
-	protected LocalDate convert(String source) {
+	public LocalDate convert(String source) {
 		if (source == null) {
 			return null;
 		}

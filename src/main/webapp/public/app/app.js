@@ -38,7 +38,7 @@ define(['angular', 'angular-message', '$', 'bootbox'], function(angular) {
 				message: 'This action will delete the Article <h5><i>' + article.headline + '</i></h5> from the system permanently.',
 				callback: function(result) {
 					if(result) {
-						ArticleService.deleteArticle(article, postDelete);
+						ArticleService.deleteArticle(article.id, postDelete);
 					}
 				},
 				onEscape: false

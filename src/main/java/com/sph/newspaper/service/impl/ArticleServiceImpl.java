@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.sph.newspaper.domain.Article;
@@ -24,6 +25,12 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public Article getById(String id) {
 		return repository.findOne(id);
+	}
+	
+	@Override
+	public List<Article> getByPublishedDateAndCount(LocalDate date, int count) {
+		PageRequest pageRequest = new PageRequest(0, count);
+		return repository.findByPublishedDate(date, pageRequest);
 	}
 
 	@Override

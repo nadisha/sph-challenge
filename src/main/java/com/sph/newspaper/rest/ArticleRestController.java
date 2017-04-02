@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sph.newspaper.converter.DtoStringToLocalDateConverter;
 import com.sph.newspaper.domain.Article;
 import com.sph.newspaper.rest.dto.ArticleDto;
 import com.sph.newspaper.service.ArticleService;
@@ -44,6 +45,17 @@ public class ArticleRestController {
 			throw ex;
 		}
 	}
+	
+	@RequestMapping(value = "{dd-MM-yyyy}/{count}", method = RequestMethod.GET)
+	public List<ArticleDto> readArticles(@PathVariable("dd-MM-yyyy") String date, @PathVariable int count) {
+		try {			
+			DtoStringToLocalDateConverter converter = new DtoStringToLocalDateConverter("dd-MM-yyyy");
+			List<Article> articles = service.getByPublishedDateAndCount(converter.convert(date), count);
+			return mapper.convertToDtoList(articles);
+		} catch (Exception ex) {
+			throw ex;
+		}
+	}	
 	
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public ArticleDto saveArticle(@RequestBody ArticleDto articleDto) {
