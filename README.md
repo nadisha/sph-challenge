@@ -38,9 +38,47 @@ Article information should include article id, publication, published date, head
 - Article code is unique
 - Security is not required 
 - Article code, author and headline of the article would not be able to modify
+- A mongod instance is running 
+ 
+# Setup
 
-# Build & Deploy
-To run tests
+## Build
+The application can be build for 3 environments, development, test and production.
+* Development
+Update `dev.properties` file
+Build using following command 
+```
+mvn clean install -P dev -DskipTests 
+```
+Deployment artifact is `sph-dev.war` under `target` folder
+ 
+* Test
+Update `test.properties` file
+Build using following command 
+```
+mvn clean install -P test -DskipTests 
+```
+Deployment artifact is `sph-test.war` under `target` folder
+
+* Production
+Update `prod.properties` file
+Build using following command 
+```
+mvn clean install -P prod -DskipTests 
+```
+Deployment artifact is `sph.war` under `target` folder
+
+
+## Seed data 
+To setup seed data, run following shell script under `db` folder. Follow the instructions given in the shell script before execute it.
+```
+sh import-seed.sh
+``` 
+
+## Deploy
+Deploy the war file on a web server
+
+# To Run Tests
 ```
 mvn -Dtest=TestArticleService test
-```
+``` 
