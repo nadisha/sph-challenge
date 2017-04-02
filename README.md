@@ -46,7 +46,8 @@ Article information should include article id, publication, published date, head
 The application can be build for 3 environments, development, test and production.
 * Development
 
-Update `dev.properties` file
+Update `dev.properties` file under `environments` folder
+
 Build using following command 
 ```
 mvn clean install -P dev -DskipTests 
@@ -55,7 +56,8 @@ Deployment artifact is `sph-dev.war` under `target` folder
  
 * Test
 
-Update `test.properties` file
+Update `test.properties` file under `environments` folder
+
 Build using following command 
 ```
 mvn clean install -P test -DskipTests 
@@ -64,7 +66,8 @@ Deployment artifact is `sph-test.war` under `target` folder
 
 * Production
 
-Update `prod.properties` file
+Update `prod.properties` file under `environments` folder
+
 Build using following command 
 ```
 mvn clean install -P prod -DskipTests 
