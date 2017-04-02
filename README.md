@@ -1,7 +1,7 @@
 # Challenge
 Write a small web application to store article information of a newspaper. This application should be able to handle all the CRUD operations. Also create REST API which allows the public to read latest 10 articles of a particular day. Use the following technologies for developing this application.
 
-Article information should include article id, publication, published date, headline, content, author, modified date,
+Article information should include article id, publication, published date, headline, content, author, modified date.
 
 # Tools and Technologies
 * **Build Tool:** Maven v3.3.3
@@ -39,6 +39,8 @@ Article information should include article id, publication, published date, head
 - Security is not required 
 - Article code, author and headline of the article would not be able to modify
 - A mongod instance is running 
+- Article created data is considered as the published date of the article
+- Article edited date is considered as the modified date of the article.
  
 # Setup
 
@@ -88,3 +90,6 @@ Deploy the war file on a web server
 ```
 mvn -Dtest=TestArticleService test
 ``` 
+
+# Access the application
+e.g http://localhost:8080/sph-dev/
