@@ -36,7 +36,7 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Override
 	public List<Article> getByPublishedDateAndCount(LocalDate date, int count) {
-		Sort sort = new Sort(new Order(Direction.ASC, "publishedDate"));
+		Sort sort = new Sort(new Order(Direction.DESC, "publishedDate"));
 		PageRequest pageRequest = new PageRequest(0, count, sort);
 		LocalDateTime from = LocalDateTime.of(date.getYear(), date.getMonth(), date.getDayOfMonth(), 0, 0);
 		LocalDateTime to = LocalDateTime.of(date.getYear(), date.getMonth(), date.getDayOfMonth(), 23, 59);

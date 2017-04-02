@@ -28,7 +28,7 @@ Article information should include article id, publication, published date, head
 # REST API end points
 * `GET` `/api/articles` - Get all the articles
 * `GET` `/api/articles/{id}` - Get an article by id
-* `GET` `/api/articles/{dd-MM-yyyy}/{count}` - Get the articles for certain date. For example, to get 5 articles on date 01-04-2017, `/api/articles/01-04-2017/5`
+* `GET` `/api/articles/{dd-MM-yyyy}/{count}` - Get the latest articles for certain date. For example, to get 5 articles on date 01-04-2017, `/api/articles/01-04-2017/5`
 * `POST` `/api/articles` - Save a new article
 * `PUT` `/api/articles/{id}` - Update an article by id
 * `DELETE` `/api/articles/{id}` - Remove an article by id
