@@ -13,13 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sph.newspaper.converter.DtoStringToLocalDateConverter;
 import com.sph.newspaper.domain.Article;
+import com.sph.newspaper.exception.ApplicationException;
 import com.sph.newspaper.rest.dto.ArticleDto;
 import com.sph.newspaper.service.ArticleService;
 import com.sph.newspaper.service.mapper.ArticleMapper;
 
 @RestController
 @RequestMapping(value = "/api/articles")
-public class ArticleRestController {
+public class ArticleRestController extends ApplicationRestController{
 	
 	@Autowired
 	private ArticleService service;
@@ -58,23 +59,23 @@ public class ArticleRestController {
 	}	
 	
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public ArticleDto saveArticle(@RequestBody ArticleDto articleDto) {
+	public ArticleDto saveArticle(@RequestBody ArticleDto articleDto) throws ApplicationException{
 		try {
 			Article article = mapper.convertToEntity(articleDto);
 			article = service.saveOrUpdate(article);
 			return mapper.convertToDto(article);
-		} catch (Exception ex) {
+		} catch (ApplicationException ex) {
 			throw ex;
 		}
 	}
 	
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
-	public ArticleDto updateArticle(@PathVariable String id, @RequestBody ArticleDto articleDto) {
+	public ArticleDto updateArticle(@PathVariable String id, @RequestBody ArticleDto articleDto) throws ApplicationException{
 		try {
 			Article article = mapper.convertToEntity(articleDto);
 			article = service.saveOrUpdate(article);
 			return mapper.convertToDto(article);
-		} catch (Exception ex) {
+		} catch (ApplicationException ex) {
 			throw ex;
 		}
 	}

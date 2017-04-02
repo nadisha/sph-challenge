@@ -20,6 +20,8 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import com.sph.newspaper.config.ServiceConfig;
 import com.sph.newspaper.domain.Article;
+import com.sph.newspaper.exception.ApplicationException;
+import com.sph.newspaper.exception.ArticleAlreadyExistException;
 import com.sph.newspaper.service.ArticleService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -44,20 +46,37 @@ public class TestArticleService {
 	}
 	
 	@Test
-	public void testArticleSave() {
+	public void testArticleSave() throws ApplicationException{
 		Article newArticle = ArticleMockData.getNew();
 		newArticle = articleService.saveOrUpdate(newArticle);
-		assertNotNull("New Article id should not be null", newArticle.getId());
+		assertNotNull("New Article id should not be null", newArticle.getId());		
 	}
 	
 	@Test
-	public void testArticleUpdate() {
+	public void testArticleAlreadyExist() {
+		Article newArticle = ArticleMockData.getNew();
+		try {
+			articleService.saveOrUpdate(newArticle);
+		} catch (ApplicationException ex) {
+			ex.printStackTrace();
+		}
+		
+		Article anotherArticle = ArticleMockData.getNew();
+		try {
+			articleService.saveOrUpdate(anotherArticle);
+		} catch (ApplicationException ex) {
+			assertTrue("Exception shouble be ArticleAlreadyExistException", ex instanceof ArticleAlreadyExistException);
+		}
+	}
+	
+	@Test
+	public void testArticleUpdate()  throws ApplicationException{
 		Article article = mongoTemplate.findOne(Query.query(Criteria.where("code").is(ArticleMockData.CODE + 1)), Article.class);
 		String newCode = "NEW CODE";
 		article.setCode(newCode);
 		article =  articleService.saveOrUpdate(article);
 		assertEquals("Before and after update the code shouble be identical", newCode, article.getCode());
-	}
+	}	
 	
 	@Test
 	public void testArticleGetById() {

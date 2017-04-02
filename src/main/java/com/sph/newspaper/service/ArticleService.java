@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.sph.newspaper.domain.Article;
+import com.sph.newspaper.exception.ApplicationException;
 
 public interface ArticleService {
 	public List<Article> getAll();
@@ -12,7 +13,7 @@ public interface ArticleService {
 	
 	public List<Article> getByPublishedDateAndCount(LocalDate date, int count);
 	
-	public Article saveOrUpdate(Article article);
+	public Article saveOrUpdate(Article article) throws ApplicationException;
 	
 	public void remove(String id);
 }

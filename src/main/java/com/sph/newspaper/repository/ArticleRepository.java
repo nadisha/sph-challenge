@@ -11,4 +11,6 @@ import com.sph.newspaper.domain.Article;
 public interface ArticleRepository extends MongoRepository<Article, String> {
 	
 	List<Article> findByPublishedDate(LocalDate publishedDate, Pageable pageable);
+	
+	Article findByCode(String code);
 }

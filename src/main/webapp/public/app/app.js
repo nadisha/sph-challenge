@@ -76,15 +76,15 @@ define(['angular', 'angular-message', '$', 'bootbox'], function(angular) {
 		
 		
 		function postFetchAll(payload){
-			if (payload.status == 200) {
+			if (payload.data.errorMessage == undefined) {
 				$scope.articles = payload.data;
 			} else {
-				ArticleUIService.setMessage($scope, false, 'Error: Not able to fetch all the articles.');
+				ArticleUIService.setMessage($scope, false, payload.data.errorMessage);
 			}
 		}
 		
 		function postSave(payload) {
-			if (payload.status == 200) {
+			if (payload.data.errorMessage == undefined) {
 				if (payload.config.method === 'POST') {
 					ArticleUIService.setMessage($scope, true, 'New Article has added.');
 				} else {
@@ -94,25 +94,25 @@ define(['angular', 'angular-message', '$', 'bootbox'], function(angular) {
 				$scope.article = {};
 				ArticleUIService.enableList($scope, true);				
 			} else {
-				ArticleUIService.setMessage($scope, false, 'Error in Article process.');
+				ArticleUIService.setMessage($scope, false, payload.data.errorMessage);
 			}
 		}
 		
 		function preEdit(payload) {
-			if (payload.status == 200) {
+			if (payload.data.errorMessage == undefined) {
 				$scope.article = payload.data;
 				ArticleUIService.enableList($scope, false);
 			} else {
-				ArticleUIService.setMessage($scope, false, 'Error: Not able to load the article');
+				ArticleUIService.setMessage($scope, false, payload.data.errorMessage);
 			}
 		}
 		
 		function postDelete(payload) {
-			if (payload.status == 200) {
+			if (payload.data.errorMessage == undefined) {
 				ArticleService.getArticles(postFetchAll);
 				ArticleUIService.setMessage($scope, true, 'Article has deleted.')
 			} else {
-				ArticleUIService.setMessage($scope, false, 'Error: Not able to delete the article');
+				ArticleUIService.setMessage($scope, false, payload.data.errorMessage);
 			}
 		}
 		

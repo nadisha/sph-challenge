@@ -8,6 +8,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.sph.newspaper.domain.Article;
+import com.sph.newspaper.exception.ApplicationException;
+import com.sph.newspaper.exception.ArticleAlreadyExistException;
 import com.sph.newspaper.repository.ArticleRepository;
 import com.sph.newspaper.service.ArticleService;
 
@@ -34,8 +36,14 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public Article saveOrUpdate(Article article) {
+	public Article saveOrUpdate(Article article) throws ApplicationException{
+		// If the id is NULL, then consider as a new article
 		if (article.getId() == null) {
+			// Check whether an article is already available for the provided code.
+			Article oldArticle = repository.findByCode(article.getCode());
+			if (oldArticle != null) {
+				throw new ArticleAlreadyExistException("An article is already available for code " + article.getCode());
+			}
 			article.setPublishedDate(LocalDate.now());
 		}
 		article.setModifiedDate(LocalDate.now());
